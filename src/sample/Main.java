@@ -3,27 +3,41 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    Scene scene1, scene2;
+    HBox l1;
+    VBox l2;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Button openDialogBtn = new Button("Open Dialog");
-        openDialogBtn.setOnAction(
-                event -> {
-                    AlertDialogBox dialogBox = new AlertDialogBox("My Window", "Just some message");
-                    dialogBox.setPositiveButton("YES", e -> System.out.println("I have been Clicked!"));
-                    dialogBox.show();
-                }
+        l1 = new HBox(10);
+        l2 = new VBox(10);
+
+        Label label1 = new Label();
+        Label label2 = new Label();
+        label1.setText("First Scene");
+        label2.setText("Second Scene");
+        Button next = new Button("NEXT");
+        Button prev = new Button("PREV");
+
+        l1.getChildren().addAll(label1, next);
+        l2.getChildren().addAll(label2, prev);
+        scene1 = new Scene(l1, 250, 250);
+        scene2 = new Scene(l2, 300, 300);
+        next.setOnAction(
+                event -> stage.setScene(scene2)
+        );
+        prev.setOnAction(
+                event -> stage.setScene(scene1)
         );
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(openDialogBtn);
-
-        Scene scene = new Scene(layout, 800, 600);
-        stage.setScene(scene);
+        stage.setScene(scene1);
         stage.show();
     }
 
